@@ -217,19 +217,18 @@ export const WaterCard = ({ waterConsumed, goalMl, onAddWater }: WaterCardProps)
 
   return (
     <>
-      <TouchableOpacity onPress={handleOpenModal} activeOpacity={0.9}>
-        <Animated.View
-          style={[
-            styles.card,
-            {
-              transform: [
-                { scale: cardScale },
-                { translateY: cardTranslateY },
-              ],
-              opacity: cardOpacity,
-            },
-          ]}
-        >
+      <Animated.View
+        style={[
+          styles.card,
+          {
+            transform: [
+              { scale: cardScale },
+              { translateY: cardTranslateY },
+            ],
+            opacity: cardOpacity,
+          },
+        ]}
+      >
           {/* Header with logo and period selector */}
           <Animated.View
             style={[
@@ -241,26 +240,35 @@ export const WaterCard = ({ waterConsumed, goalMl, onAddWater }: WaterCardProps)
               <Text style={styles.headerLogo}>💧</Text>
               <Text style={styles.headerTitle}>Water</Text>
             </View>
-            <View style={styles.periodSelector}>
-              {['D', 'W', 'M'].map((segment) => (
-                <TouchableOpacity
-                  key={segment}
-                  onPress={() => handleSegmentPress(segment)}
-                  style={[
-                    styles.periodButton,
-                    selectedSegment === segment && styles.periodButtonActive,
-                  ]}
-                >
-                  <Text
+            <View style={styles.headerRight}>
+              <View style={styles.periodSelector}>
+                {['D', 'W', 'M'].map((segment) => (
+                  <TouchableOpacity
+                    key={segment}
+                    onPress={() => handleSegmentPress(segment)}
                     style={[
-                      styles.periodText,
-                      selectedSegment === segment && styles.periodTextActive,
+                      styles.periodButton,
+                      selectedSegment === segment && styles.periodButtonActive,
                     ]}
                   >
-                    {segment}
-                  </Text>
-                </TouchableOpacity>
-              ))}
+                    <Text
+                      style={[
+                        styles.periodText,
+                        selectedSegment === segment && styles.periodTextActive,
+                      ]}
+                    >
+                      {segment}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+              <TouchableOpacity
+                style={styles.waterIconButton}
+                onPress={handleOpenModal}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.waterIconButtonText}>💧</Text>
+              </TouchableOpacity>
             </View>
           </Animated.View>
 
@@ -329,8 +337,7 @@ export const WaterCard = ({ waterConsumed, goalMl, onAddWater }: WaterCardProps)
               </Animated.View>
             ))}
           </View>
-        </Animated.View>
-      </TouchableOpacity>
+      </Animated.View>
 
       {/* Slider Modal */}
       <Modal
@@ -362,16 +369,25 @@ export const WaterCard = ({ waterConsumed, goalMl, onAddWater }: WaterCardProps)
               },
             ]}
           >
+            {/* Top indicator bar */}
+            <View style={waterModalStyles.indicatorBar} />
+
             {/* Header */}
             <View style={waterModalStyles.header}>
-              <Text style={waterModalStyles.title}>Adjust Water</Text>
-              <TouchableOpacity onPress={handleCloseModal}>
+              <View style={waterModalStyles.headerTitleContainer}>
+                <Text style={waterModalStyles.headerIcon}>💧</Text>
+                <Text style={waterModalStyles.title}>Water Intake</Text>
+              </View>
+              <TouchableOpacity onPress={handleCloseModal} style={waterModalStyles.closeButtonContainer}>
                 <Text style={waterModalStyles.closeButton}>✕</Text>
               </TouchableOpacity>
             </View>
 
-            {/* Display value */}
-            <Text style={waterModalStyles.value}>{sliderValue}ml</Text>
+            {/* Display value with background */}
+            <View style={waterModalStyles.valueContainer}>
+              <Text style={waterModalStyles.value}>{sliderValue}</Text>
+              <Text style={waterModalStyles.valueUnit}>ml</Text>
+            </View>
             <Text style={waterModalStyles.sublabel}>
               {(sliderValue / 1000).toFixed(2)}L / {(goalMl / 1000).toFixed(2)}L
             </Text>
@@ -398,7 +414,30 @@ export const WaterCard = ({ waterConsumed, goalMl, onAddWater }: WaterCardProps)
               </Animated.View>
             </View>
 
-            {/* Input area */}
+            {/* Quick preset buttons */}
+            <View style={waterModalStyles.presetsContainer}>
+              {[250, 500, 750, 1000].map((amount) => (
+                <TouchableOpacity
+                  key={amount}
+                  style={[
+                    waterModalStyles.presetButton,
+                    sliderValue === amount && waterModalStyles.presetButtonActive,
+                  ]}
+                  onPress={() => handleSliderChange(amount)}
+                >
+                  <Text
+                    style={[
+                      waterModalStyles.presetButtonText,
+                      sliderValue === amount && waterModalStyles.presetButtonTextActive,
+                    ]}
+                  >
+                    {amount}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            {/* Input area with +/- buttons */}
             <View style={waterModalStyles.inputContainer}>
               <TouchableOpacity
                 style={waterModalStyles.inputButton}
@@ -406,7 +445,10 @@ export const WaterCard = ({ waterConsumed, goalMl, onAddWater }: WaterCardProps)
               >
                 <Text style={waterModalStyles.inputButtonText}>−</Text>
               </TouchableOpacity>
-              <Text style={waterModalStyles.inputValue}>{sliderValue}</Text>
+              <View style={waterModalStyles.inputValueContainer}>
+                <Text style={waterModalStyles.inputValue}>{sliderValue}</Text>
+                <Text style={waterModalStyles.inputValueSmall}>ml</Text>
+              </View>
               <TouchableOpacity
                 style={waterModalStyles.inputButton}
                 onPress={() => handleSliderChange(sliderValue + 100)}
@@ -415,12 +457,16 @@ export const WaterCard = ({ waterConsumed, goalMl, onAddWater }: WaterCardProps)
               </TouchableOpacity>
             </View>
 
+            {/* Divider */}
+            <View style={waterModalStyles.divider} />
+
             {/* Confirm button */}
             <TouchableOpacity
               style={waterModalStyles.confirmButton}
               onPress={handleConfirmSlider}
+              activeOpacity={0.8}
             >
-              <Text style={waterModalStyles.confirmButtonText}>Save</Text>
+              <Text style={waterModalStyles.confirmButtonText}>💾 Save Changes</Text>
             </TouchableOpacity>
           </Animated.View>
 
@@ -438,119 +484,209 @@ export const WaterCard = ({ waterConsumed, goalMl, onAddWater }: WaterCardProps)
 const waterModalStyles = StyleSheet.create({
   container: {
     backgroundColor: '#FFF',
-    borderRadius: 20,
-    padding: 24,
+    borderRadius: 24,
+    padding: 28,
     width: SCREEN_WIDTH - 40,
+    maxHeight: '75%',
     shadowColor: '#000',
-    shadowOpacity: 0.3,
-    shadowRadius: 16,
-    shadowOffset: { width: 0, height: 8 },
-    elevation: 10,
+    shadowOpacity: 0.35,
+    shadowRadius: 20,
+    shadowOffset: { width: 0, height: 12 },
+    elevation: 15,
+  },
+  indicatorBar: {
+    width: 40,
+    height: 4,
+    backgroundColor: '#E8E8E8',
+    borderRadius: 2,
+    alignSelf: 'center',
+    marginBottom: 16,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 24,
+  },
+  headerTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  headerIcon: {
+    fontSize: 28,
   },
   title: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#000',
-  },
-  closeButton: {
-    fontSize: 24,
-    color: '#999',
-    fontWeight: '600',
-  },
-  value: {
-    fontSize: 48,
+    fontSize: 22,
     fontWeight: '800',
     color: '#000',
-    textAlign: 'center',
-    marginBottom: 4,
+  },
+  closeButtonContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#F5F5F5',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  closeButton: {
+    fontSize: 20,
+    color: '#999',
+    fontWeight: '700',
+  },
+  valueContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'baseline',
+    backgroundColor: '#F8F8FF',
+    paddingVertical: 20,
+    paddingHorizontal: 16,
+    borderRadius: 16,
+    marginBottom: 8,
+  },
+  value: {
+    fontSize: 56,
+    fontWeight: '800',
+    color: '#5C51F0',
+  },
+  valueUnit: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#999',
+    marginLeft: 8,
   },
   sublabel: {
     fontSize: 14,
     color: '#999',
     textAlign: 'center',
     marginBottom: 24,
+    fontWeight: '500',
   },
   sliderContainer: {
     width: '100%',
-    height: 60,
+    height: 70,
     justifyContent: 'center',
     marginBottom: 24,
     position: 'relative',
   },
   sliderTrack: {
     width: '100%',
-    height: 6,
+    height: 8,
     backgroundColor: '#E8E8E8',
-    borderRadius: 3,
+    borderRadius: 4,
     overflow: 'hidden',
   },
   sliderFill: {
     height: '100%',
     backgroundColor: '#5C51F0',
-    borderRadius: 3,
+    borderRadius: 4,
   },
   sliderThumb: {
     position: 'absolute',
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
     backgroundColor: '#5C51F0',
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#5C51F0',
-    shadowOpacity: 0.4,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 6,
-    marginLeft: -24,
-    marginTop: -21,
+    shadowOpacity: 0.5,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 8,
+    marginLeft: -28,
+    marginTop: -24,
   },
   thumbIcon: {
-    fontSize: 24,
+    fontSize: 28,
+  },
+  presetsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 8,
+    marginBottom: 20,
+  },
+  presetButton: {
+    flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 12,
+    backgroundColor: '#F5F5F5',
+    borderWidth: 1.5,
+    borderColor: '#E8E8E8',
+    alignItems: 'center',
+  },
+  presetButtonActive: {
+    backgroundColor: '#5C51F0',
+    borderColor: '#5C51F0',
+  },
+  presetButtonText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#666',
+  },
+  presetButtonTextActive: {
+    color: '#FFF',
   },
   inputContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 24,
     gap: 12,
+    marginBottom: 20,
   },
   inputButton: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 52,
+    height: 52,
+    borderRadius: 26,
     backgroundColor: '#F0F0F0',
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#E8E8E8',
   },
   inputButtonText: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: '600',
     color: '#5C51F0',
   },
-  inputValue: {
+  inputValueContainer: {
     flex: 1,
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#000',
-    textAlign: 'center',
-    backgroundColor: '#F5F5F5',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'baseline',
+    backgroundColor: '#F8F8FF',
     paddingVertical: 12,
     borderRadius: 12,
+    gap: 6,
+  },
+  inputValue: {
+    fontSize: 24,
+    fontWeight: '800',
+    color: '#5C51F0',
+  },
+  inputValueSmall: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#999',
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#E8E8E8',
+    marginBottom: 16,
   },
   confirmButton: {
     width: '100%',
-    paddingVertical: 14,
+    paddingVertical: 16,
     backgroundColor: '#5C51F0',
     borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#5C51F0',
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 6,
   },
   confirmButtonText: {
     fontSize: 16,

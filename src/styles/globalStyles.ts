@@ -313,6 +313,27 @@ export const styles = StyleSheet.create({
   periodTextActive: {
     color: '#FFF',
   },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  waterIconButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 12,
+    backgroundColor: '#FFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.12,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
+  },
+  waterIconButtonText: {
+    fontSize: 24,
+  },
   cardMainNumber: {
     fontSize: 72,
     fontWeight: '800',
