@@ -268,4 +268,5 @@ export const styles = StyleSheet.create({
   },
   controlLabelActive: {
     color: '#FFF',
-  },});
+  },
+});

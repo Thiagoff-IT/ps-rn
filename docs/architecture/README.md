@@ -1,3 +1,4 @@
+````markdown
 # 💪 React Native Fitness Dashboard + 💧 Water Quick Add
 
 A complete Expo React Native app featuring a Fitness Steps Dashboard with integrated premium water intake animation component.
@@ -251,3 +252,4 @@ Issues? See:
 
 *Built with ❤️ using React Native Reanimated v3*
 
+````

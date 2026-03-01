@@ -1,3 +1,4 @@
+````markdown
 # Estrutura do Projeto - Fitness Tracker App
 
 ## 📁 Arquitetura de Pastas
@@ -79,3 +80,5 @@ Quando precisar adicionar novas funcionalidades:
 3. **Novas constantes** → `src/constants/novaConstante.ts`
 4. **Funções auxiliares** → `src/utils/funcoesAuxiliares.ts`
 5. **Novos tipos** → Adicionar em `src/types/index.ts`
+
+````

@@ -1,6 +1,11 @@
 import React from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { DashboardScreen } from './src/screens';
 
 export default function App() {
-  return <DashboardScreen />;
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <DashboardScreen />
+    </GestureHandlerRootView>
+  );
 }
