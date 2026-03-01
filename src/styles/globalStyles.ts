@@ -1,0 +1,180 @@
+import { StyleSheet, Dimensions } from 'react-native';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#5C51F0',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 20,
+  },
+  headerContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    position: 'relative',
+  },
+  headerItem: {
+    flex: 1,
+  },
+  headerNumber: {
+    color: 'rgba(255, 255, 255, 0.8)',
+    fontSize: 28,
+    fontWeight: '600',
+  },
+  headerHighlight: {
+    color: '#FF9500',
+    fontSize: 28,
+    fontWeight: '700',
+  },
+  headerLabel: {
+    color: 'rgba(255, 255, 255, 0.7)',
+    fontSize: 11,
+    fontWeight: '500',
+    marginTop: 4,
+  },
+  trashIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  trashText: {
+    fontSize: 20,
+  },
+  chartContainer: {
+    width: '100%',
+    paddingHorizontal: 15,
+    paddingVertical: 30,
+    alignItems: 'center',
+  },
+  chartContent: {
+    width: '100%',
+    height: 180,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-around',
+  },
+  barWrapper: {
+    alignItems: 'center',
+    flex: 1,
+    marginHorizontal: 5,
+  },
+  bar: {
+    width: '100%',
+    backgroundColor: 'rgba(200, 190, 255, 0.5)',
+    borderRadius: 12,
+    minHeight: 20,
+  },
+  dayLabel: {
+    marginTop: 10,
+    fontSize: 11,
+    color: 'rgba(255, 255, 255, 0.6)',
+  },
+  card: {
+    width: SCREEN_WIDTH - 40,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 28,
+    padding: 28,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.2,
+    shadowRadius: 16,
+    elevation: 10,
+    marginBottom: 20,
+  },
+  cardHeader: {
+    marginBottom: 16,
+  },
+  badge: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#000',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  badgeText: {
+    color: '#FFF',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  stepsNumber: {
+    fontSize: 72,
+    fontWeight: '800',
+    color: '#000',
+    marginVertical: 8,
+    lineHeight: 80,
+  },
+  stepsLabel: {
+    fontSize: 16,
+    color: '#666',
+    fontWeight: '500',
+    marginBottom: 28,
+  },
+  progressBar: {
+    height: 4,
+    backgroundColor: '#5C51F0',
+    borderRadius: 2,
+    marginBottom: 28,
+    minHeight: 4,
+  },
+  metricsContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 28,
+    paddingBottom: 28,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+  },
+  metric: {
+    alignItems: 'center',
+  },
+  metricValue: {
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#000',
+  },
+  metricLabel: {
+    fontSize: 12,
+    color: '#999',
+    marginTop: 6,
+    fontWeight: '500',
+  },
+  metricUnit: {
+    fontSize: 10,
+    color: '#CCC',
+    marginTop: 2,
+  },
+  controls: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  controlButton: {
+    alignItems: 'center',
+    paddingVertical: 14,
+    paddingHorizontal: 18,
+    borderRadius: 18,
+    backgroundColor: '#F5F5F5',
+  },
+  controlIcon: {
+    fontSize: 22,
+  },
+  controlLabel: {
+    fontSize: 12,
+    color: '#333',
+    marginTop: 6,
+    fontWeight: '600',
+  },
+});
