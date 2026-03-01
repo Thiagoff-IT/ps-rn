@@ -12,8 +12,6 @@ export const StepsCard = ({ stepsConsumed, onAddSteps }: StepsCardProps) => {
   const cardScale = useRef(new Animated.Value(0.85)).current;
   const cardOpacity = useRef(new Animated.Value(0)).current;
   const cardTranslateY = useRef(new Animated.Value(50)).current;
-  const badgeScale = useRef(new Animated.Value(0)).current;
-  const badgeRotate = useRef(new Animated.Value(0)).current;
   const numberScale = useRef(new Animated.Value(1)).current;
   const stepsAnimValue = useRef(new Animated.Value(0)).current;
   const [stepsDisplay, setStepsDisplay] = useState(0);
@@ -29,6 +27,8 @@ export const StepsCard = ({ stepsConsumed, onAddSteps }: StepsCardProps) => {
     new Animated.Value(0.3),
   ]).current;
   const metricsOpacity = useRef(new Animated.Value(0)).current;
+  const headerOpacity = useRef(new Animated.Value(0)).current;
+  const [selectedSegment, setSelectedSegment] = useState('D');
 
   useEffect(() => {
     // Card entrance with scale and translation
@@ -52,30 +52,13 @@ export const StepsCard = ({ stepsConsumed, onAddSteps }: StepsCardProps) => {
         delay: 600,
         useNativeDriver: true,
       }),
-    ]).start();
-
-    // Badge bounce
-    Animated.sequence([
-      Animated.delay(900),
-      Animated.spring(badgeScale, {
+      Animated.timing(headerOpacity, {
         toValue: 1,
-        friction: 5,
-        tension: 50,
+        duration: 600,
+        delay: 700,
         useNativeDriver: true,
       }),
     ]).start();
-
-    // Badge rotate continuous
-    Animated.loop(
-      Animated.sequence([
-        Animated.delay(1100),
-        Animated.timing(badgeRotate, {
-          toValue: 1,
-          duration: 4000,
-          useNativeDriver: true,
-        }),
-      ])
-    ).start();
 
     // Counter animation
     Animated.timing(stepsAnimValue, {
@@ -154,12 +137,11 @@ export const StepsCard = ({ stepsConsumed, onAddSteps }: StepsCardProps) => {
     ]).start();
   }, [stepsConsumed]);
 
-  const badgeRotation = badgeRotate.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '360deg'],
-  });
-
   const progressPercentage = (stepsConsumed / 275) * 100;
+
+  const handleSegmentPress = (segment: string) => {
+    setSelectedSegment(segment);
+  };
 
   return (
     <Animated.View
@@ -174,22 +156,43 @@ export const StepsCard = ({ stepsConsumed, onAddSteps }: StepsCardProps) => {
         },
       ]}
     >
-      <View style={styles.cardHeader}>
-        <Animated.View
-          style={[
-            styles.badge,
-            {
-              transform: [
-                { scale: badgeScale },
-                { rotateZ: badgeRotation },
-              ],
-            },
-          ]}
-        >
-          <Text style={styles.badgeText}>DI</Text>
-        </Animated.View>
-      </View>
+      {/* Card Header with Logo and Segmented Control */}
+      <Animated.View
+        style={[
+          styles.cardHeaderRow,
+          {
+            opacity: headerOpacity,
+          },
+        ]}
+      >
+        <View style={styles.cardLogo}>
+          <Text style={styles.cardLogoText}>G1</Text>
+        </View>
 
+        <View style={styles.segmentedControl}>
+          {['D', 'W', 'M'].map((segment) => (
+            <TouchableOpacity
+              key={segment}
+              style={[
+                styles.segmentButton,
+                selectedSegment === segment && styles.segmentButtonActive,
+              ]}
+              onPress={() => handleSegmentPress(segment)}
+            >
+              <Text
+                style={[
+                  styles.segmentText,
+                  selectedSegment === segment && styles.segmentTextActive,
+                ]}
+              >
+                {segment}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </Animated.View>
+
+      {/* Steps Display */}
       <Animated.Text
         style={[
           styles.stepsNumber,
@@ -198,7 +201,7 @@ export const StepsCard = ({ stepsConsumed, onAddSteps }: StepsCardProps) => {
           },
         ]}
       >
-        {stepsConsumed}
+        {stepsDisplay}
       </Animated.Text>
       <Text style={styles.stepsLabel}>Steps</Text>
 
@@ -213,6 +216,7 @@ export const StepsCard = ({ stepsConsumed, onAddSteps }: StepsCardProps) => {
         ]}
       />
 
+      {/* Metrics */}
       <Animated.View style={[styles.metricsContainer, { opacity: metricsOpacity }]}>
         <View style={styles.metric}>
           <Text style={styles.metricValue}>0.11</Text>
@@ -230,28 +234,44 @@ export const StepsCard = ({ stepsConsumed, onAddSteps }: StepsCardProps) => {
         </View>
       </Animated.View>
 
+      {/* Controls with pill highlight */}
       <View style={styles.controls}>
-        {controlsOpacity.map((opacity, index) => (
-          <Animated.View
-            key={index}
-            style={[
-              styles.controlButton,
-              {
-                opacity: opacity,
-                transform: [{ scale: controlsScale[index] }],
-              },
-            ]}
-          >
-            {index === 0 && (
-              <TouchableOpacity onPress={onAddSteps}>
-                <Text style={styles.controlIcon}>👟</Text>
-                <Text style={styles.controlLabel}>Steps</Text>
+        {controlsOpacity.map((opacity, index) => {
+          const isFirst = index === 0;
+          const iconMap = ['👟', '⚡', '🎯'];
+          const labelMap = ['Steps', 'Activity', 'Goals'];
+
+          return (
+            <Animated.View
+              key={index}
+              style={[
+                styles.controlButton,
+                isFirst && styles.controlButtonActive,
+                {
+                  opacity: opacity,
+                  transform: [{ scale: controlsScale[index] }],
+                },
+              ]}
+            >
+              <TouchableOpacity
+                onPress={isFirst ? onAddSteps : undefined}
+                style={{
+                  alignItems: 'center',
+                }}
+              >
+                <Text style={styles.controlIcon}>{iconMap[index]}</Text>
+                <Text
+                  style={[
+                    styles.controlLabel,
+                    isFirst && styles.controlLabelActive,
+                  ]}
+                >
+                  {labelMap[index]}
+                </Text>
               </TouchableOpacity>
-            )}
-            {index === 1 && <Text style={styles.controlIcon}>〰️</Text>}
-            {index === 2 && <Text style={styles.controlIcon}>⊙</Text>}
-          </Animated.View>
-        ))}
+            </Animated.View>
+          );
+        })}
       </View>
     </Animated.View>
   );

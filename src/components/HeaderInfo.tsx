@@ -10,8 +10,10 @@ import { styles } from '../styles/globalStyles';
 export const HeaderInfo = () => {
   const leftOpacity = useRef(new Animated.Value(0)).current;
   const leftTranslateX = useRef(new Animated.Value(-50)).current;
+  const centerOpacity = useRef(new Animated.Value(0)).current;
+  const centerScale = useRef(new Animated.Value(0.8)).current;
   const rightOpacity = useRef(new Animated.Value(0)).current;
-  const rightTranslateX = useRef(new Animated.Value(50)).current;
+  const rightScale = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.parallel([
@@ -27,16 +29,30 @@ export const HeaderInfo = () => {
         delay: 100,
         useNativeDriver: true,
       }),
-      Animated.timing(rightOpacity, {
+      Animated.timing(centerOpacity, {
         toValue: 1,
         duration: 600,
         delay: 200,
         useNativeDriver: true,
       }),
-      Animated.timing(rightTranslateX, {
-        toValue: 0,
-        duration: 600,
+      Animated.spring(centerScale, {
+        toValue: 1,
+        friction: 6,
+        tension: 40,
         delay: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(rightOpacity, {
+        toValue: 1,
+        duration: 600,
+        delay: 300,
+        useNativeDriver: true,
+      }),
+      Animated.spring(rightScale, {
+        toValue: 1,
+        friction: 6,
+        tension: 40,
+        delay: 300,
         useNativeDriver: true,
       }),
     ]).start();
@@ -46,23 +62,28 @@ export const HeaderInfo = () => {
     <View style={styles.headerContainer}>
       <Animated.View
         style={[
-          styles.headerItem,
+          styles.headerLeftSection,
           {
             opacity: leftOpacity,
             transform: [{ translateX: leftTranslateX }],
           },
         ]}
       >
-        <Text style={styles.headerNumber}>876</Text>
-        <Text style={styles.headerLabel}>Steps behind</Text>
+        <View style={styles.headerLeftIcon}>
+          <Text style={styles.headerLeftIconText}>⚠️</Text>
+        </View>
+        <View style={styles.headerLeftContent}>
+          <Text style={styles.headerNumber}>876</Text>
+          <Text style={styles.headerLabel}>Steps behind</Text>
+        </View>
       </Animated.View>
 
       <Animated.View
         style={[
           styles.headerItem,
           {
-            opacity: rightOpacity,
-            transform: [{ translateX: rightTranslateX }],
+            opacity: centerOpacity,
+            transform: [{ scale: centerScale }],
           },
         ]}
       >
@@ -70,9 +91,18 @@ export const HeaderInfo = () => {
         <Text style={styles.headerLabel}>Lower than yesterday</Text>
       </Animated.View>
 
-      <TouchableOpacity style={styles.trashIcon}>
-        <Text style={styles.trashText}>🗑️</Text>
-      </TouchableOpacity>
+      <Animated.View
+        style={[
+          {
+            opacity: rightOpacity,
+            transform: [{ scale: rightScale }],
+          },
+        ]}
+      >
+        <TouchableOpacity style={styles.waterButton}>
+          <Text style={styles.waterIcon}>💧</Text>
+        </TouchableOpacity>
+      </Animated.View>
     </View>
   );
 };

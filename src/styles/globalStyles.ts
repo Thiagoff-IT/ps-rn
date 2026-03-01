@@ -8,7 +8,28 @@ export const styles = StyleSheet.create({
     backgroundColor: '#5C51F0',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingTop: 20,
+  },
+  statusBarContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 12,
+    paddingBottom: 8,
+  },
+  timeText: {
+    color: 'rgba(255, 255, 255, 0.9)',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  statusIcons: {
+    flexDirection: 'row',
+    gap: 4,
+  },
+  statusIcon: {
+    fontSize: 12,
+    color: 'rgba(255, 255, 255, 0.8)',
   },
   headerContainer: {
     width: '100%',
@@ -18,6 +39,27 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 20,
     position: 'relative',
+    gap: 12,
+  },
+  headerLeftSection: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  headerLeftIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerLeftIconText: {
+    fontSize: 18,
+  },
+  headerLeftContent: {
+    flex: 1,
   },
   headerItem: {
     flex: 1,
@@ -38,25 +80,39 @@ export const styles = StyleSheet.create({
     fontWeight: '500',
     marginTop: 4,
   },
-  trashIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+  waterButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  trashText: {
-    fontSize: 20,
+  waterIcon: {
+    fontSize: 22,
   },
   chartContainer: {
     width: '100%',
     paddingHorizontal: 15,
     paddingVertical: 30,
     alignItems: 'center',
+    flexDirection: 'row',
+  },
+  chartAxisLabels: {
+    flexDirection: 'column-reverse',
+    justifyContent: 'space-around',
+    height: 180,
+    marginRight: 8,
+  },
+  axisLabel: {
+    fontSize: 10,
+    color: 'rgba(255, 255, 255, 0.5)',
+    fontWeight: '500',
+    width: 30,
+    textAlign: 'right',
   },
   chartContent: {
-    width: '100%',
+    flex: 1,
     height: 180,
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -91,21 +147,49 @@ export const styles = StyleSheet.create({
     elevation: 10,
     marginBottom: 20,
   },
-  cardHeader: {
-    marginBottom: 16,
+  cardHeaderRow: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
   },
-  badge: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+  cardLogo: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     backgroundColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  badgeText: {
+  cardLogoText: {
     color: '#FFF',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
+  },
+  segmentedControl: {
+    flexDirection: 'row',
+    backgroundColor: '#F0F0F0',
+    borderRadius: 12,
+    padding: 4,
+    gap: 4,
+  },
+  segmentButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 10,
+    backgroundColor: 'transparent',
+  },
+  segmentButtonActive: {
+    backgroundColor: '#5C51F0',
+  },
+  segmentText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#666',
+  },
+  segmentTextActive: {
+    color: '#FFF',
   },
   stepsNumber: {
     fontSize: 72,
@@ -160,16 +244,21 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+    gap: 12,
   },
   controlButton: {
     alignItems: 'center',
-    paddingVertical: 14,
-    paddingHorizontal: 18,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
     borderRadius: 18,
     backgroundColor: '#F5F5F5',
+    minWidth: 70,
+  },
+  controlButtonActive: {
+    backgroundColor: '#5C51F0',
   },
   controlIcon: {
-    fontSize: 22,
+    fontSize: 24,
   },
   controlLabel: {
     fontSize: 12,
@@ -177,4 +266,6 @@ export const styles = StyleSheet.create({
     marginTop: 6,
     fontWeight: '600',
   },
-});
+  controlLabelActive: {
+    color: '#FFF',
+  },});

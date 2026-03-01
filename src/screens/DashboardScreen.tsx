@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import {
-  View,
   StatusBar,
+  ScrollView,
 } from 'react-native';
-import { styles } from '../styles/globalStyles';
+import { GradientBackground } from '../components/GradientBackground';
+import { StatusBarTop } from '../components/StatusBarTop';
 import { HeaderInfo } from '../components/HeaderInfo';
 import { BarChart } from '../components/BarChart';
 import { StepsCard } from '../components/StepsCard';
@@ -19,11 +20,17 @@ export const DashboardScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <HeaderInfo />
-      <BarChart />
-      <StepsCard stepsConsumed={stepsConsumed} onAddSteps={handleAddSteps} />
-      <StatusBar style="light" />
-    </View>
+    <GradientBackground>
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 30 }}
+      >
+        <StatusBarTop />
+        <HeaderInfo />
+        <BarChart />
+        <StepsCard stepsConsumed={stepsConsumed} onAddSteps={handleAddSteps} />
+      </ScrollView>
+    </GradientBackground>
   );
 };

@@ -32,8 +32,8 @@ export const BarChart = () => {
     const animations = animatedValues.map((anim, index) =>
       Animated.timing(anim, {
         toValue: CHART_DATA[index].value,
-        duration: 1000,
-        delay: 500 + index * 100,
+        duration: 800,
+        delay: 600 + index * 80,
         useNativeDriver: false,
       })
     );
@@ -51,6 +51,18 @@ export const BarChart = () => {
         },
       ]}
     >
+      <View style={styles.chartAxisLabels}>
+        <Text style={styles.axisLabel}>3K</Text>
+        <Text style={styles.axisLabel}>2.7K</Text>
+        <Text style={styles.axisLabel}>2.4K</Text>
+        <Text style={styles.axisLabel}>2.1K</Text>
+        <Text style={styles.axisLabel}>1.8K</Text>
+        <Text style={styles.axisLabel}>1.5K</Text>
+        <Text style={styles.axisLabel}>1.2K</Text>
+        <Text style={styles.axisLabel}>900</Text>
+        <Text style={styles.axisLabel}>600</Text>
+        <Text style={styles.axisLabel}>300</Text>
+      </View>
       <View style={styles.chartContent}>
         {animatedValues.map((animValue, index) => (
           <View key={index} style={styles.barWrapper}>
@@ -59,21 +71,9 @@ export const BarChart = () => {
                 styles.bar,
                 {
                   height: animValue.interpolate({
-                    inputRange: [0, 2500],
+                    inputRange: [0, 3000],
                     outputRange: ['0%', '100%'],
                   }),
-                  opacity: animValue.interpolate({
-                    inputRange: [0, 2500],
-                    outputRange: [0.5, 1],
-                  }),
-                  transform: [
-                    {
-                      scaleY: animValue.interpolate({
-                        inputRange: [0, 2500],
-                        outputRange: [0, 1],
-                      }),
-                    },
-                  ],
                 },
               ]}
             />
