@@ -9,7 +9,7 @@ import { StatusBarTop } from '../components/StatusBarTop';
 import { HeaderInfo } from '../components/HeaderInfo';
 import { BarChart } from '../components/BarChart';
 import { StepsCard } from '../components/StepsCard';
-import { WaterQuickAdd } from '../components/WaterQuickAdd';
+import { WaterCard } from '../components/WaterCard';
 
 export const DashboardScreen = () => {
   const [stepsConsumed, setStepsConsumed] = useState(0);
@@ -37,14 +37,8 @@ export const DashboardScreen = () => {
         <HeaderInfo />
         <BarChart />
         <StepsCard stepsConsumed={stepsConsumed} onAddSteps={handleAddSteps} />
+        <WaterCard waterConsumed={waterConsumed} goalMl={2000} onAddWater={handleWaterChange} />
       </ScrollView>
-      
-      {/* Water Quick Add Component */}
-      <WaterQuickAdd
-        goalMl={2000}
-        initialMl={waterConsumed}
-        onChange={handleWaterChange}
-      />
     </GradientBackground>
   );
 };

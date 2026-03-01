@@ -8,3 +8,9 @@ export interface StepsCardProps {
   stepsConsumed: number;
   onAddSteps: () => void;
 }
+
+export interface WaterCardProps {
+  waterConsumed: number;
+  goalMl: number;
+  onAddWater: (amount: number) => void;
+}

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import Animated, {
   withSpring,
   withSequence,
   withDelay,
+  withRepeat,
   Easing,
   interpolate,
   Extrapolate,
@@ -56,6 +57,18 @@ export const WaterQuickAdd: React.FC<WaterQuickAddProps> = ({
   const wavePhase = useSharedValue(0);
 
   const amounts = [150, 250, 350, 500];
+
+  // Animate wave continuously
+  useEffect(() => {
+    wavePhase.value = withRepeat(
+      withTiming(Math.PI * 4, {
+        duration: 2000,
+        easing: Easing.linear,
+      }),
+      -1,
+      true
+    );
+  }, []);
 
   // Abre o painel
   const handleOpenPanel = useCallback(async () => {
@@ -156,17 +169,6 @@ export const WaterQuickAdd: React.FC<WaterQuickAddProps> = ({
           easing: Easing.out(Easing.cubic),
         })
       );
-
-      // Onda animada continuamente
-      wavePhase.value = withSequence(
-        withDelay(
-          150,
-          withTiming(Math.PI * 4, {
-            duration: 1500,
-            easing: Easing.linear,
-          })
-        )
-      );
     }, 200);
   }, [currentMl, selectedAmount]);
 
@@ -201,16 +203,15 @@ export const WaterQuickAdd: React.FC<WaterQuickAddProps> = ({
 
   // Gerar onda SVG
   const generateWavePath = (phase: number): string => {
-    const centerX = BUTTON_RADIUS;
     const centerY = BUTTON_RADIUS;
-    const amplitude = 2;
-    const frequency = 2;
+    const amplitude = 3;
+    const frequency = 1.5;
 
     let pathData = `M 0 ${centerY}`;
 
-    for (let x = 0; x <= BUTTON_SIZE; x += 2) {
+    for (let x = 0; x <= BUTTON_SIZE; x += 1) {
       const normalizedX = (x / BUTTON_SIZE) * Math.PI * 2 * frequency;
-      const progress = interpolate(progressValue.value, [0, 1], [1, 0.5], Extrapolate.CLAMP);
+      const progress = interpolate(progressValue.value, [0, 1], [1, 0.3], Extrapolate.CLAMP);
       const y =
         centerY +
         amplitude * Math.sin(normalizedX + phase) * progress;

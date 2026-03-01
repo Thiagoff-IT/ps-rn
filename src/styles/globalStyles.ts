@@ -269,4 +269,90 @@ export const styles = StyleSheet.create({
   controlLabelActive: {
     color: '#FFF',
   },
+  cardHeader: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  headerLogo: {
+    fontSize: 32,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#000',
+  },
+  periodSelector: {
+    flexDirection: 'row',
+    backgroundColor: '#F0F0F0',
+    borderRadius: 8,
+    padding: 3,
+    gap: 2,
+  },
+  periodButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 6,
+    backgroundColor: 'transparent',
+  },
+  periodButtonActive: {
+    backgroundColor: '#5C51F0',
+  },
+  periodText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#666',
+  },
+  periodTextActive: {
+    color: '#FFF',
+  },
+  cardMainNumber: {
+    fontSize: 72,
+    fontWeight: '800',
+    color: '#000',
+    marginVertical: 8,
+    lineHeight: 80,
+  },
+  cardMainLabel: {
+    fontSize: 14,
+    color: '#999',
+    fontWeight: '500',
+    marginBottom: 24,
+  },
+  metricItem: {
+    alignItems: 'center',
+  },
+  progressFill: {
+    height: '100%',
+    backgroundColor: '#5C51F0',
+    borderRadius: 2,
+  },
+  waterButtonsContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    gap: 12,
+  },
+  waterButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 18,
+    backgroundColor: '#F5F5F5',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minWidth: 70,
+  },
+  waterButtonText: {
+    fontSize: 13,
+    color: '#333',
+    fontWeight: '600',
+  },
 });
