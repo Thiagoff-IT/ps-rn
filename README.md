@@ -24,6 +24,8 @@ This repository contains a simple Expo React Native app demonstrating an animati
 
 3. Open in the iOS simulator (or Expo Go on a device).
 
+> (No additional dependencies are required; the overlay uses a simple translucent background so the app bundles cleanly for web.)
+
 ### Using Docker
 
 You can also build and run the project inside a container:
@@ -47,6 +49,8 @@ Tapping the **Open** button at the center of the screen slides an overlay up fro
 
 
 > This implementation focuses on the animation behavior; layout and styling are intentionally minimal.
+> 
+> The UI is styled with an Apple/iOS aesthetic in mind: system background colors, a translucent overlay in place of blur, rounded corners, shadows, and the system font are used to evoke the look and feel of native iOS components.
 
 
 ## Notes
